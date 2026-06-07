@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 import { useColors } from "@/hooks/useColors";
@@ -57,6 +57,8 @@ export default function MainTabLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const isIOS = Platform.OS === "ios";
+
+  if (!user) return <Redirect href="/login" />;
 
   const activeTabs =
     user?.role === "volunteer" ? VOLUNTEER_TABS :
