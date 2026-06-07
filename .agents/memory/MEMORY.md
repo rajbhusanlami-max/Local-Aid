@@ -1,0 +1,2 @@
+- [LocalAid tab routing](localaid-tab-routing.md) — role-adaptive tabs via href:null pattern; avoid unstable-native-tabs import.
+- [LocalAid screen pattern](localaid-screen-pattern.md) — thin tab delegates in app/(main)/, full UI in screens/ directory.
