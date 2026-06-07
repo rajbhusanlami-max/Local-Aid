@@ -1,5 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Platform, Pressable, ScrollView, Switch, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -11,15 +12,33 @@ import { useColors } from "@/hooks/useColors";
 export default function CitizenProfile() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { user, logout, updateUser } = useAuth();
   const { requests } = useData();
   const [notifToggle, setNotifToggle] = useState(user?.notificationPrefs.statusUpdates ?? true);
+  const [signingOut, setSigningOut] = useState(false);
 
   if (!user) return null;
 
   const myReqs = requests.filter((r) => r.citizenId === user.id);
   const completed = myReqs.filter((r) => r.status === "completed").length;
   const topPadding = Platform.OS === "web" ? 67 : insets.top;
+
+  const handleSignOut = async () => {
+    const confirmed =
+      Platform.OS === "web"
+        ? window.confirm("Sign out of LocalAid?")
+        : await new Promise<boolean>((resolve) =>
+            Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+              { text: "Cancel", style: "cancel", onPress: () => resolve(false) },
+              { text: "Sign Out", style: "destructive", onPress: () => resolve(true) },
+            ])
+          );
+    if (!confirmed) return;
+    setSigningOut(true);
+    await logout();
+    router.replace("/login");
+  };
 
   const MENU_ITEMS = [
     { label: "Personal Information", icon: "user", action: () => Alert.alert("Coming soon") },
@@ -106,11 +125,9 @@ export default function CitizenProfile() {
         </Card>
 
         <Button
-          title="Sign Out"
-          onPress={() => Alert.alert("Sign Out", "Are you sure?", [
-            { text: "Cancel", style: "cancel" },
-            { text: "Sign Out", style: "destructive", onPress: logout },
-          ])}
+          title={signingOut ? "Signing out…" : "Sign Out"}
+          onPress={handleSignOut}
+          loading={signingOut}
           variant="outline"
           fullWidth
           size="lg"

@@ -52,7 +52,7 @@ const ALL_SCREENS = [
 ];
 
 export default function MainTabLayout() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const colors = useColors();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
@@ -60,10 +60,10 @@ export default function MainTabLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.replace("/login");
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   const activeTabs =
     user?.role === "volunteer" ? VOLUNTEER_TABS :

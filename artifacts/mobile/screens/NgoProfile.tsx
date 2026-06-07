@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 import { Alert, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar, Badge, Button, Card, Divider } from "@/components/UI";
@@ -11,14 +12,32 @@ import { useColors } from "@/hooks/useColors";
 export default function NgoProfile() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { user, logout } = useAuth();
   const { requests, campaigns, volunteers } = useData();
+  const [signingOut, setSigningOut] = useState(false);
 
   if (!user) return null;
 
   const handled = requests.filter((r) => r.status === "completed").length;
   const activeCamps = campaigns.filter((c) => c.ngoId === "ngo-001" && c.status === "published").length;
   const topPadding = Platform.OS === "web" ? 67 : insets.top;
+
+  const handleSignOut = async () => {
+    const confirmed =
+      Platform.OS === "web"
+        ? window.confirm("Sign out of LocalAid?")
+        : await new Promise<boolean>((resolve) =>
+            Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+              { text: "Cancel", style: "cancel", onPress: () => resolve(false) },
+              { text: "Sign Out", style: "destructive", onPress: () => resolve(true) },
+            ])
+          );
+    if (!confirmed) return;
+    setSigningOut(true);
+    await logout();
+    router.replace("/login");
+  };
 
   const MENU = [
     { label: "Edit NGO Profile", icon: "edit-2", action: () => Alert.alert("Coming soon") },
@@ -89,10 +108,16 @@ export default function NgoProfile() {
           ))}
         </Card>
 
-        <Button title="Sign Out" onPress={() => Alert.alert("Sign Out", "Are you sure?", [
-          { text: "Cancel", style: "cancel" },
-          { text: "Sign Out", style: "destructive", onPress: logout },
-        ])} variant="outline" fullWidth size="lg" icon={<Feather name="log-out" size={16} color={colors.destructive} />} style={{ borderColor: colors.destructive }} />
+        <Button
+          title={signingOut ? "Signing out…" : "Sign Out"}
+          onPress={handleSignOut}
+          loading={signingOut}
+          variant="outline"
+          fullWidth
+          size="lg"
+          icon={<Feather name="log-out" size={16} color={colors.destructive} />}
+          style={{ borderColor: colors.destructive }}
+        />
       </View>
     </ScrollView>
   );
