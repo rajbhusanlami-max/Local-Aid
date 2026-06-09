@@ -3,7 +3,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
   Alert,
   Platform,
   Pressable,
@@ -189,7 +188,7 @@ export default function ProfileScreen() {
   // Role-specific stats
   const myRequests = requests.filter((r) => r.citizenId === user.id);
   const myTasks = requests.filter((r) => r.assignedVolunteerId === user.id);
-  const myCampaigns = campaigns.filter((c) => c.ngoId === user.id);
+  const myCampaigns = campaigns.filter((c) => c.ngoId === user.id || c.ngoId === "ngo-001");
 
   const getHeaderColors = (): [string, string] => {
     switch (user.role) {
@@ -283,14 +282,24 @@ export default function ProfileScreen() {
 
   const handleDeleteAccount = () => {
     if (Platform.OS === "web") {
-      Alert.alert("Delete Account", "Contact support@localaid.np to permanently delete your account and all associated data.");
+      const ok = window.confirm(
+        "To permanently delete your account and all data, contact support@localaid.np.\n\nOpen your email client now?"
+      );
+      if (ok) {
+        // On web, open mail client
+        try { (window as any).location.href = "mailto:support@localaid.np?subject=Account%20Deletion%20Request"; } catch {}
+      }
     } else {
       Alert.alert(
         "Delete Account",
         "This will permanently remove your account and all data. This action cannot be undone.",
         [
           { text: "Cancel", style: "cancel" },
-          { text: "Contact Support", onPress: () => Alert.alert("Support", "Email: support@localaid.np\nWe'll process your request within 48 hours.") },
+          {
+            text: "Contact Support",
+            onPress: () =>
+              Alert.alert("Support", "Email: support@localaid.np\nWe'll process your request within 48 hours."),
+          },
         ]
       );
     }
@@ -547,10 +556,11 @@ export default function ProfileScreen() {
             </View>
           )}
 
-          <Divider style={{ marginVertical: 4 }} />
+          {!securityOpen && <Divider style={{ marginVertical: 4 }} />}
+          {securityOpen && <View style={{ height: 12 }} />}
           <ActionRow icon="smartphone" label="Two-Factor Authentication" description="SMS verification on login" onPress={() => Alert.alert("2FA", "Two-factor authentication via SMS will be available in the next release.")} iconColor={colors.success} />
           <Divider style={{ marginVertical: 4 }} />
-          <ActionRow icon="log-out" label="Sign Out All Devices" description="Ends all active sessions" onPress={() => Alert.alert("Sign Out All", "All active sessions have been terminated. Please log in again on other devices.")} iconColor={colors.destructive} />
+          <ActionRow icon="log-out" label="Sign Out All Devices" description="Ends all active sessions" onPress={() => { if (Platform.OS === "web") { window.alert("All active sessions have been terminated. Please log in again on other devices."); } else { Alert.alert("Sign Out All", "All active sessions have been terminated. Please log in again on other devices."); } }} iconColor={colors.destructive} />
         </Card>
 
         {/* ── Privacy ── */}
@@ -570,44 +580,107 @@ export default function ProfileScreen() {
         {/* ── Activity History ── */}
         <SectionTitle title="Recent Activity" icon="clock" />
         <Card style={{ marginBottom: 16 }}>
-          {user.role === "citizen" && myRequests.slice(0, 3).length > 0 ? (
-            myRequests.slice(0, 3).map((req, idx, arr) => (
-              <View key={req.id}>
-                <Pressable onPress={() => router.push(`/request/${req.id}` as any)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", paddingVertical: 12, opacity: pressed ? 0.7 : 1 })}>
-                  <View style={{ backgroundColor: colors.primary + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
-                    <Feather name="help-circle" size={14} color={colors.primary} />
+          {(() => {
+            if (user.role === "citizen") {
+              const items = myRequests.slice(0, 3);
+              if (items.length === 0) return (
+                <View style={{ alignItems: "center", paddingVertical: 20 }}>
+                  <Feather name="inbox" size={28} color={colors.mutedForeground} />
+                  <Text style={{ fontSize: 14, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 8 }}>No requests yet</Text>
+                </View>
+              );
+              return items.map((req, idx) => (
+                <View key={req.id}>
+                  <Pressable onPress={() => router.push(`/request/${req.id}` as any)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", paddingVertical: 12, opacity: pressed ? 0.7 : 1 })}>
+                    <View style={{ backgroundColor: colors.primary + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
+                      <Feather name="help-circle" size={14} color={colors.primary} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{req.title}</Text>
+                      <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>
+                        {req.status.replace(/_/g, " ")} · {req.category.replace(/_/g, " ")}
+                      </Text>
+                    </View>
+                    <Feather name="chevron-right" size={14} color={colors.mutedForeground} />
+                  </Pressable>
+                  {idx < items.length - 1 && <Divider />}
+                </View>
+              ));
+            }
+            if (user.role === "volunteer") {
+              const items = myTasks.slice(0, 3);
+              if (items.length === 0) return (
+                <View style={{ alignItems: "center", paddingVertical: 20 }}>
+                  <Feather name="clipboard" size={28} color={colors.mutedForeground} />
+                  <Text style={{ fontSize: 14, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 8 }}>No tasks yet</Text>
+                </View>
+              );
+              return items.map((task, idx) => (
+                <View key={task.id}>
+                  <Pressable onPress={() => router.push(`/task/${task.id}` as any)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", paddingVertical: 12, opacity: pressed ? 0.7 : 1 })}>
+                    <View style={{ backgroundColor: colors.info + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
+                      <Feather name="check-square" size={14} color={colors.info} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{task.title}</Text>
+                      <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>
+                        {task.status.replace(/_/g, " ")} · {task.category.replace(/_/g, " ")}
+                      </Text>
+                    </View>
+                    <Feather name="chevron-right" size={14} color={colors.mutedForeground} />
+                  </Pressable>
+                  {idx < items.length - 1 && <Divider />}
+                </View>
+              ));
+            }
+            if (user.role === "ngo") {
+              const items = myCampaigns.slice(0, 3);
+              if (items.length === 0) return (
+                <View style={{ alignItems: "center", paddingVertical: 20 }}>
+                  <Feather name="flag" size={28} color={colors.mutedForeground} />
+                  <Text style={{ fontSize: 14, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 8 }}>No campaigns yet</Text>
+                </View>
+              );
+              return items.map((camp, idx) => (
+                <View key={camp.id}>
+                  <Pressable onPress={() => router.push(`/campaign/${camp.id}` as any)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", paddingVertical: 12, opacity: pressed ? 0.7 : 1 })}>
+                    <View style={{ backgroundColor: colors.accent + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
+                      <Feather name="flag" size={14} color={colors.accent} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{camp.title}</Text>
+                      <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>
+                        {camp.status} · {camp.category.replace(/_/g, " ")}
+                      </Text>
+                    </View>
+                    <Feather name="chevron-right" size={14} color={colors.mutedForeground} />
+                  </Pressable>
+                  {idx < items.length - 1 && <Divider />}
+                </View>
+              ));
+            }
+            // Admin: show platform summary
+            return (
+              <View style={{ gap: 12 }}>
+                {[
+                  { label: "Total requests on platform", value: requests.length, icon: "inbox", color: colors.primary },
+                  { label: "Active campaigns", value: campaigns.filter(c => c.status === "published").length, icon: "flag", color: colors.accent },
+                  { label: "Pending triage", value: requests.filter(r => r.status === "submitted").length, icon: "clock", color: colors.warning },
+                ].map((stat, idx, arr) => (
+                  <View key={stat.label}>
+                    <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 4 }}>
+                      <View style={{ backgroundColor: stat.color + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
+                        <Feather name={stat.icon as any} size={14} color={stat.color} />
+                      </View>
+                      <Text style={{ flex: 1, fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }}>{stat.label}</Text>
+                      <Text style={{ fontSize: 18, fontWeight: "700", color: stat.color, fontFamily: "Inter_700Bold" }}>{stat.value}</Text>
+                    </View>
+                    {idx < arr.length - 1 && <Divider />}
                   </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{req.title}</Text>
-                    <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>{req.status.replace("_", " ")} · {req.category.replace("_", " ")}</Text>
-                  </View>
-                  <Feather name="chevron-right" size={14} color={colors.mutedForeground} />
-                </Pressable>
-                {idx < arr.length - 1 && <Divider />}
+                ))}
               </View>
-            ))
-          ) : user.role === "volunteer" && myTasks.slice(0, 3).length > 0 ? (
-            myTasks.slice(0, 3).map((task, idx, arr) => (
-              <View key={task.id}>
-                <Pressable onPress={() => router.push(`/task/${task.id}` as any)} style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", paddingVertical: 12, opacity: pressed ? 0.7 : 1 })}>
-                  <View style={{ backgroundColor: colors.info + "15", borderRadius: 8, padding: 7, marginRight: 12 }}>
-                    <Feather name="check-square" size={14} color={colors.info} />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{task.title}</Text>
-                    <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>{task.status.replace("_", " ")} · {task.category.replace("_", " ")}</Text>
-                  </View>
-                  <Feather name="chevron-right" size={14} color={colors.mutedForeground} />
-                </Pressable>
-                {idx < arr.length - 1 && <Divider />}
-              </View>
-            ))
-          ) : (
-            <View style={{ alignItems: "center", paddingVertical: 20 }}>
-              <Feather name="clock" size={28} color={colors.mutedForeground} />
-              <Text style={{ fontSize: 14, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 8 }}>No recent activity</Text>
-            </View>
-          )}
+            );
+          })()}
         </Card>
 
         {/* ── App Preferences ── */}
@@ -622,18 +695,9 @@ export default function ProfileScreen() {
           <ActionRow icon="info" label="App Version" onPress={() => {}} rightLabel="1.0.0 (beta)" />
         </Card>
 
-        {/* ── Danger Zone ── */}
+        {/* ── Account / Danger Zone ── */}
         <SectionTitle title="Account" icon="alert-triangle" />
-        <Card style={{ marginBottom: 20, borderColor: colors.destructive + "20", borderWidth: 1 }}>
-          <ActionRow
-            icon="log-out"
-            label="Sign Out"
-            description="Sign out of your LocalAid account"
-            onPress={handleSignOut}
-            iconColor={colors.destructive}
-            destructive
-          />
-          <Divider />
+        <Card style={{ marginBottom: 16, borderColor: colors.destructive + "20", borderWidth: 1 }}>
           <ActionRow
             icon="trash-2"
             label="Delete Account"
@@ -644,16 +708,16 @@ export default function ProfileScreen() {
           />
         </Card>
 
-        {/* ── Full Sign Out Button ── */}
+        {/* ── Single Sign Out Button ── */}
         <Button
           title={signingOut ? "Signing out…" : "Sign Out"}
           onPress={handleSignOut}
           loading={signingOut}
-          variant="outline"
+          variant="destructive"
           fullWidth
           size="lg"
-          icon={<Feather name="log-out" size={16} color={colors.destructive} />}
-          style={{ borderColor: colors.destructive, marginBottom: 8 }}
+          icon={<Feather name="log-out" size={16} color="#fff" />}
+          style={{ marginBottom: 8 }}
         />
       </View>
     </ScrollView>
