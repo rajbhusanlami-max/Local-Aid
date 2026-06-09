@@ -37,9 +37,9 @@ export default function AdminHome() {
         start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-            <View style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: 14, padding: 10 }}>
-              <Feather name="shield" size={22} color="#fff" />
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: 12, padding: 8 }}>
+              <Feather name="shield" size={18} color="#fff" />
             </View>
             <View>
               <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", fontFamily: "Inter_400Regular" }}>Super Admin</Text>
@@ -48,16 +48,21 @@ export default function AdminHome() {
               </Text>
             </View>
           </View>
-          <Pressable onPress={() => router.push("/(main)/notifications")}>
-            <View style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: 12, padding: 10, position: "relative" }}>
-              <Feather name="bell" size={20} color="#fff" />
-              {unread > 0 && (
-                <View style={{ position: "absolute", top: -2, right: -2, backgroundColor: colors.destructive, borderRadius: 10, minWidth: 16, height: 16, alignItems: "center", justifyContent: "center" }}>
-                  <Text style={{ color: "#fff", fontSize: 9, fontFamily: "Inter_700Bold" }}>{unread}</Text>
-                </View>
-              )}
-            </View>
-          </Pressable>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Pressable onPress={() => router.push("/(main)/notifications")}>
+              <View style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: 12, padding: 10, position: "relative" }}>
+                <Feather name="bell" size={20} color="#fff" />
+                {unread > 0 && (
+                  <View style={{ position: "absolute", top: -2, right: -2, backgroundColor: colors.destructive, borderRadius: 10, minWidth: 16, height: 16, alignItems: "center", justifyContent: "center" }}>
+                    <Text style={{ color: "#fff", fontSize: 9, fontFamily: "Inter_700Bold" }}>{unread}</Text>
+                  </View>
+                )}
+              </View>
+            </Pressable>
+            <Pressable onPress={() => router.push("/(main)/profile")} style={{ borderRadius: 21, borderWidth: 2, borderColor: "rgba(255,255,255,0.3)" }}>
+              <Avatar name={user?.name ?? "A"} size={38} role="admin" />
+            </Pressable>
+          </View>
         </View>
 
         <View style={{ flexDirection: "row", gap: 8 }}>

@@ -31,25 +31,27 @@ export default function NgoHome() {
         start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-            <Avatar name={user?.ngoName ?? "NGO"} size={42} role="ngo" />
-            <View>
-              <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", fontFamily: "Inter_400Regular" }}>NGO Dashboard</Text>
-              <Text style={{ fontSize: 16, fontWeight: "700", color: "#fff", fontFamily: "Inter_700Bold" }} numberOfLines={1}>
-                {user?.ngoName ?? "Your NGO"}
-              </Text>
-            </View>
+          <View>
+            <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", fontFamily: "Inter_400Regular" }}>NGO Dashboard</Text>
+            <Text style={{ fontSize: 16, fontWeight: "700", color: "#fff", fontFamily: "Inter_700Bold" }} numberOfLines={1}>
+              {user?.ngoName ?? "Your NGO"}
+            </Text>
           </View>
-          <Pressable onPress={() => router.push("/(main)/notifications")} style={{ position: "relative" }}>
-            <View style={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 12, padding: 10 }}>
-              <Feather name="bell" size={20} color="#fff" />
-            </View>
-            {unread > 0 && (
-              <View style={{ position: "absolute", top: -2, right: -2, backgroundColor: colors.primary, borderRadius: 10, minWidth: 18, height: 18, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: colors.accent }}>
-                <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_700Bold" }}>{unread}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <Pressable onPress={() => router.push("/(main)/notifications")} style={{ position: "relative" }}>
+              <View style={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 12, padding: 10 }}>
+                <Feather name="bell" size={20} color="#fff" />
               </View>
-            )}
-          </Pressable>
+              {unread > 0 && (
+                <View style={{ position: "absolute", top: -2, right: -2, backgroundColor: colors.primary, borderRadius: 10, minWidth: 18, height: 18, alignItems: "center", justifyContent: "center", borderWidth: 2, borderColor: colors.accent }}>
+                  <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_700Bold" }}>{unread}</Text>
+                </View>
+              )}
+            </Pressable>
+            <Pressable onPress={() => router.push("/(main)/profile")} style={{ borderRadius: 21, borderWidth: 2, borderColor: "rgba(255,255,255,0.5)" }}>
+              <Avatar name={user?.name ?? "N"} size={38} role="ngo" />
+            </Pressable>
+          </View>
         </View>
 
         <View style={{ flexDirection: "row", gap: 10 }}>

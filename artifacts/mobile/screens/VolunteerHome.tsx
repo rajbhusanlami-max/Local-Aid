@@ -39,22 +39,21 @@ export default function VolunteerHome() {
         start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-            <Avatar name={user?.name ?? "V"} size={42} role="volunteer" />
-            <View>
-              <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", fontFamily: "Inter_400Regular" }}>Volunteer</Text>
+          <View>
+            <Text style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", fontFamily: "Inter_400Regular" }}>Volunteer</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
               <Text style={{ fontSize: 17, fontWeight: "700", color: "#fff", fontFamily: "Inter_700Bold" }}>
                 {user?.name?.split(" ")[0]}
               </Text>
+              {user?.isVerifiedByNGO && (
+                <View style={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 8, paddingHorizontal: 7, paddingVertical: 3, flexDirection: "row", alignItems: "center", gap: 3 }}>
+                  <Feather name="shield" size={10} color="#fff" />
+                  <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_600SemiBold" }}>Verified</Text>
+                </View>
+              )}
             </View>
           </View>
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            {user?.isVerifiedByNGO && (
-              <View style={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 10, paddingHorizontal: 10, paddingVertical: 6, flexDirection: "row", alignItems: "center", gap: 4 }}>
-                <Feather name="shield" size={12} color="#fff" />
-                <Text style={{ color: "#fff", fontSize: 11, fontFamily: "Inter_600SemiBold" }}>Verified</Text>
-              </View>
-            )}
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Pressable onPress={() => router.push("/(main)/notifications")} style={{ position: "relative" }}>
               <View style={{ backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 12, padding: 10 }}>
                 <Feather name="bell" size={20} color="#fff" />
@@ -64,6 +63,9 @@ export default function VolunteerHome() {
                   <Text style={{ color: "#fff", fontSize: 10, fontFamily: "Inter_700Bold" }}>{unread}</Text>
                 </View>
               )}
+            </Pressable>
+            <Pressable onPress={() => router.push("/(main)/profile")} style={{ borderRadius: 21, borderWidth: 2, borderColor: "rgba(255,255,255,0.5)" }}>
+              <Avatar name={user?.name ?? "V"} size={38} role="volunteer" />
             </Pressable>
           </View>
         </View>
