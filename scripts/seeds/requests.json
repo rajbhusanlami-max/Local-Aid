@@ -1,0 +1,160 @@
+[
+  {
+    "id": "req-001",
+    "citizenId": "citizen-001",
+    "citizenName": "Priya Sharma",
+    "title": "Need help with grocery shopping",
+    "description": "I am elderly and need assistance with weekly grocery shopping. I live on the 3rd floor without elevator access.",
+    "category": "elderly_care",
+    "urgency": 3,
+    "status": "in_progress",
+    "location": {
+      "address": "Thamel, Kathmandu",
+      "district": "Kathmandu"
+    },
+    "photos": [],
+    "assignedVolunteerId": "volunteer-001",
+    "assignedNgoId": "ngo-001",
+    "timeline": [
+      {
+        "status": "submitted",
+        "timestamp": "2026-06-11T09:09:37.458Z",
+        "note": "Request submitted"
+      },
+      {
+        "status": "accepted",
+        "timestamp": "2026-06-11T10:09:37.458Z",
+        "note": "Accepted by Helping Hands Nepal"
+      },
+      {
+        "status": "in_progress",
+        "timestamp": "2026-06-11T11:09:37.458Z",
+        "note": "Volunteer on the way"
+      }
+    ],
+    "createdAt": "2026-06-11T08:09:37.458Z",
+    "updatedAt": "2026-06-11T11:09:37.458Z"
+  },
+  {
+    "id": "req-002",
+    "citizenId": "other-001",
+    "citizenName": "Hari Bahadur",
+    "title": "Blood donation needed urgently — O+",
+    "description": "Patient at Bir Hospital needs O+ blood transfusion for surgery scheduled tomorrow morning.",
+    "category": "blood_donation",
+    "urgency": 5,
+    "status": "submitted",
+    "location": {
+      "address": "Bir Hospital, Kathmandu",
+      "district": "Kathmandu"
+    },
+    "photos": [],
+    "assignedNgoId": "ngo-001",
+    "timeline": [
+      {
+        "status": "submitted",
+        "timestamp": "2026-06-11T11:39:37.458Z",
+        "note": "Request submitted"
+      }
+    ],
+    "createdAt": "2026-06-11T11:39:37.458Z",
+    "updatedAt": "2026-06-11T11:39:37.458Z"
+  },
+  {
+    "id": "req-003",
+    "citizenId": "other-002",
+    "citizenName": "Gita Poudel",
+    "title": "Food assistance for family of 5",
+    "description": "Lost job last month, need food support for family including 3 children aged 4-12.",
+    "category": "food",
+    "urgency": 4,
+    "status": "accepted",
+    "location": {
+      "address": "Lalitpur, Patan",
+      "district": "Lalitpur"
+    },
+    "photos": [],
+    "assignedVolunteerId": "volunteer-001",
+    "assignedNgoId": "ngo-001",
+    "timeline": [
+      {
+        "status": "submitted",
+        "timestamp": "2026-06-11T07:09:37.458Z",
+        "note": "Request submitted"
+      },
+      {
+        "status": "accepted",
+        "timestamp": "2026-06-11T08:09:37.458Z",
+        "note": "Assigned to Raj Thapa"
+      }
+    ],
+    "createdAt": "2026-06-11T06:09:37.458Z",
+    "updatedAt": "2026-06-11T08:09:37.458Z"
+  },
+  {
+    "id": "req-004",
+    "citizenId": "other-003",
+    "citizenName": "Bimala Khadka",
+    "title": "Math tutoring for grade 10 student",
+    "description": "My daughter is preparing for SEE exams and needs math tutoring 3 times per week.",
+    "category": "education",
+    "urgency": 2,
+    "status": "completed",
+    "location": {
+      "address": "Bhaktapur",
+      "district": "Bhaktapur"
+    },
+    "photos": [],
+    "assignedVolunteerId": "volunteer-001",
+    "assignedNgoId": "ngo-001",
+    "timeline": [
+      {
+        "status": "submitted",
+        "timestamp": "2026-06-01T12:09:37.458Z",
+        "note": "Request submitted"
+      },
+      {
+        "status": "accepted",
+        "timestamp": "2026-06-02T12:09:37.458Z",
+        "note": "Assigned volunteer"
+      },
+      {
+        "status": "in_progress",
+        "timestamp": "2026-06-03T12:09:37.458Z",
+        "note": "Tutoring started"
+      },
+      {
+        "status": "completed",
+        "timestamp": "2026-06-09T12:09:37.458Z",
+        "note": "Successfully completed"
+      }
+    ],
+    "citizenRating": 5,
+    "createdAt": "2026-06-01T12:09:37.458Z",
+    "updatedAt": "2026-06-09T12:09:37.458Z"
+  },
+  {
+    "id": "req-005",
+    "citizenId": "other-004",
+    "citizenName": "Mohan Lal",
+    "title": "Medical escort to hospital",
+    "description": "Need someone to accompany my elderly mother (70) to TUTH for a follow-up appointment on Friday.",
+    "category": "medical",
+    "urgency": 3,
+    "status": "submitted",
+    "location": {
+      "address": "Maharajgunj, Kathmandu",
+      "district": "Kathmandu"
+    },
+    "photos": [],
+    "timeline": [
+      {
+        "status": "submitted",
+        "timestamp": "2026-06-11T10:09:37.458Z",
+        "note": "Request submitted"
+      }
+    ],
+    "createdAt": "2026-06-11T10:09:37.458Z",
+    "updatedAt": "2026-06-11T10:09:37.458Z"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "camp-001",
+    "ngoId": "ngo-001",
+    "ngoName": "Helping Hands Nepal",
+    "title": "Winter Blanket Distribution Drive",
+    "description": "Distributing warm blankets to homeless and low-income families across Kathmandu Valley before winter.",
+    "tags": [
+      "welfare",
+      "winter",
+      "distribution"
+    ],
+    "eventDate": "2026-06-18T12:09:37.458Z",
+    "location": {
+      "address": "Basantapur Durbar Square",
+      "district": "Kathmandu"
+    },
+    "maxVolunteers": 50,
+    "registeredCount": 23,
+    "status": "published",
+    "createdAt": "2026-06-06T12:09:37.458Z"
+  },
+  {
+    "id": "camp-002",
+    "ngoId": "ngo-001",
+    "ngoName": "Helping Hands Nepal",
+    "title": "Free Health Camp — Lalitpur",
+    "description": "Free medical check-ups, blood pressure screening, and health consultations for all community members.",
+    "tags": [
+      "medical",
+      "health",
+      "community"
+    ],
+    "eventDate": "2026-06-25T12:09:37.458Z",
+    "location": {
+      "address": "Patan Dhoka, Lalitpur",
+      "district": "Lalitpur"
+    },
+    "maxVolunteers": 30,
+    "registeredCount": 12,
+    "status": "published",
+    "createdAt": "2026-06-08T12:09:37.458Z"
+  },
+  {
+    "id": "camp-003",
+    "ngoId": "ngo-002",
+    "ngoName": "Green Future Nepal",
+    "title": "Bagmati River Cleanup",
+    "description": "Join us to clean the banks of Bagmati River. Equipment and refreshments provided.",
+    "tags": [
+      "environment",
+      "community",
+      "cleanup"
+    ],
+    "eventDate": "2026-06-14T12:09:37.458Z",
+    "location": {
+      "address": "Sankhamul, Bagmati Bridge",
+      "district": "Kathmandu"
+    },
+    "maxVolunteers": 100,
+    "registeredCount": 67,
+    "status": "published",
+    "createdAt": "2026-06-04T12:09:37.458Z"
+  }
+]

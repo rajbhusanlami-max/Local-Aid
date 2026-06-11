@@ -1,0 +1,119 @@
+[
+  {
+    "id": "citizen-001",
+    "name": "Priya Sharma",
+    "email": "citizen@localaid.np",
+    "role": "citizen",
+    "isVerified": true,
+    "phone": "+977 98-0000-1111",
+    "createdAt": "2026-05-12T12:09:37.458Z",
+    "location": {
+      "lat": 27.7172,
+      "lng": 85.324,
+      "address": "Thamel, Kathmandu",
+      "district": "Kathmandu"
+    },
+    "notificationPrefs": {
+      "statusUpdates": true,
+      "newAssignments": false,
+      "campaigns": true,
+      "digest": false
+    },
+    "privacy": {
+      "showActivity": true,
+      "dataSharing": false,
+      "locationVisible": true
+    }
+  },
+  {
+    "id": "volunteer-001",
+    "name": "Raj Thapa",
+    "email": "volunteer@localaid.np",
+    "role": "volunteer",
+    "isVerified": true,
+    "phone": "+977 98-0000-2222",
+    "createdAt": "2026-04-12T12:09:37.458Z",
+    "location": {
+      "lat": 27.7172,
+      "lng": 85.324,
+      "address": "Patan, Lalitpur",
+      "district": "Lalitpur"
+    },
+    "skills": [
+      "First Aid",
+      "Elder Care",
+      "Food Distribution",
+      "Education"
+    ],
+    "serviceRadiusKm": 10,
+    "isVerifiedByNGO": true,
+    "completedTaskCount": 34,
+    "totalHoursContributed": 127,
+    "rating": 4.8,
+    "badges": [
+      "first_task",
+      "ten_tasks",
+      "fifty_hours"
+    ],
+    "notificationPrefs": {
+      "statusUpdates": true,
+      "newAssignments": true,
+      "campaigns": true,
+      "digest": true
+    },
+    "privacy": {
+      "showActivity": true,
+      "dataSharing": true,
+      "locationVisible": true
+    }
+  },
+  {
+    "id": "ngo-001",
+    "name": "Sunita Rai",
+    "email": "ngo@localaid.np",
+    "role": "ngo",
+    "isVerified": true,
+    "phone": "+977 01-4000-001",
+    "createdAt": "2026-03-13T12:09:37.458Z",
+    "ngoName": "Helping Hands Nepal",
+    "ngoDescription": "Providing community support across Kathmandu Valley since 2018.",
+    "approvalStatus": "approved",
+    "location": {
+      "lat": 27.7172,
+      "lng": 85.324,
+      "address": "Baluwatar, Kathmandu",
+      "district": "Kathmandu"
+    },
+    "notificationPrefs": {
+      "statusUpdates": true,
+      "newAssignments": true,
+      "campaigns": true,
+      "digest": true
+    },
+    "privacy": {
+      "showActivity": true,
+      "dataSharing": false,
+      "locationVisible": true
+    }
+  },
+  {
+    "id": "admin-001",
+    "name": "Bikash Adhikari",
+    "email": "admin@localaid.np",
+    "role": "admin",
+    "isVerified": true,
+    "phone": "+977 98-0000-9999",
+    "createdAt": "2025-12-13T12:09:37.458Z",
+    "notificationPrefs": {
+      "statusUpdates": true,
+      "newAssignments": true,
+      "campaigns": true,
+      "digest": true
+    },
+    "privacy": {
+      "showActivity": true,
+      "dataSharing": false,
+      "locationVisible": false
+    }
+  }
+]

@@ -650,7 +650,7 @@ export default function ProfileScreen() {
                     <View style={{ flex: 1 }}>
                       <Text style={{ fontSize: 14, color: colors.foreground, fontFamily: "Inter_500Medium" }} numberOfLines={1}>{camp.title}</Text>
                       <Text style={{ fontSize: 12, color: colors.mutedForeground, fontFamily: "Inter_400Regular", marginTop: 1 }}>
-                        {camp.status} · {camp.category.replace(/_/g, " ")}
+                        {camp.status} · {camp.tags?.[0]?.replace(/_/g, " ") || "campaign"}
                       </Text>
                     </View>
                     <Feather name="chevron-right" size={14} color={colors.mutedForeground} />

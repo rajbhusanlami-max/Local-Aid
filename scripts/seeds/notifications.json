@@ -1,0 +1,47 @@
+[
+  {
+    "id": "notif-001",
+    "userId": "citizen-001",
+    "type": "status_update",
+    "title": "Request Update",
+    "message": "Your request 'Need help with grocery shopping' has been accepted.",
+    "read": false,
+    "createdAt": "2026-06-11T10:09:37.458Z"
+  },
+  {
+    "id": "notif-002",
+    "userId": "citizen-001",
+    "type": "volunteer_matched",
+    "title": "Volunteer Assigned",
+    "message": "Raj Thapa will help you with your request. Expected arrival in 1 hour.",
+    "read": false,
+    "createdAt": "2026-06-11T10:39:37.458Z"
+  },
+  {
+    "id": "notif-003",
+    "userId": "citizen-001",
+    "type": "new_campaign",
+    "title": "New Campaign Nearby",
+    "message": "Winter Blanket Distribution Drive is happening in Kathmandu next week.",
+    "read": true,
+    "createdAt": "2026-06-10T12:09:37.458Z"
+  },
+  {
+    "id": "notif-004",
+    "userId": "volunteer-001",
+    "type": "task_assigned",
+    "title": "New Task Assigned",
+    "message": "You have been assigned to help Gita Poudel with food assistance.",
+    "read": false,
+    "createdAt": "2026-06-11T09:09:37.458Z"
+  },
+  {
+    "id": "notif-005",
+    "userId": "volunteer-001",
+    "type": "certificate_ready",
+    "title": "Certificate Ready!",
+    "message": "Your 30-task milestone certificate is ready to download.",
+    "read": false,
+    "createdAt": "2026-06-11T00:09:37.458Z"
+  }
+]
