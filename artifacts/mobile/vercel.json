@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "local-aid-mobile",
+  "env": {
+    "EXPO_PUBLIC_API_BASE_URL": "@expo_public_api_base_url"
+  },
+  "builds": [
+    {
+      "src": "server/serve.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server/serve.js"
+    }
+  ]
+}
