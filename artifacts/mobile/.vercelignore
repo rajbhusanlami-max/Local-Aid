@@ -1,0 +1,6 @@
+node_modules/
+.env.local
+.metro-cache
+.expo-*
+dist/
+build/
